@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+
+require 'thor'
+require 'mixergy'
+require 'mixergy/version'
+require 'io/console'
+
+module Mixergy
+  class CLI < Thor
+    # Exit with a non-zero status code on failure
+    def self.exit_on_failure?
+      true
+    end
+
+    desc "version", "Prints the Mixergy gem version"
+    def version
+      puts Mixergy::VERSION
+    end
+
+    desc "tanks", "List all tanks for the authenticated user"
+    option :username, aliases: '-u', desc: 'Username'
+    option :password, aliases: '-p', desc: 'Password'
+    def tanks
+      username = options[:username] || prompt_for_username
+      password = options[:password] || prompt_for_password
+      client = Mixergy::Client.new
+      client.login(username, password)
+      tanks = client.tanks
+      if tanks.empty?
+        puts "No tanks found."
+      else
+        tanks.each do |tank|
+          puts "Serial: #{tank.serial_number}"
+        end
+      end
+    end
+
+    private
+
+    def prompt_for_username
+      print "Username: "
+      username = STDIN.gets
+      puts
+      username.chomp
+    end
+
+    def prompt_for_password
+      print "Password: "
+      password = STDIN.noecho(&:gets)
+      puts
+      password.chomp
+    end
+  end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  Mixergy::CLI.start(ARGV)
+end
