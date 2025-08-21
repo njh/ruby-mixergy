@@ -42,9 +42,7 @@ module Mixergy
 
     def prompt_for_username
       print "Username: "
-      username = STDIN.gets
-      puts
-      username.chomp
+      username = STDIN.gets.chomp
     end
 
     def prompt_for_password
