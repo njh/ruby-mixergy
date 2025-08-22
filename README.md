@@ -21,9 +21,35 @@ bundle install
 ```
 
 
-## Usage
+## Command Line Interface
 
-TODO: Write usage instructions here
+Included in the gem is a command line tool, to perform actions with the Mixergy API:
+
+```sh
+$ mixergy help 
+Commands:
+  mixergy help [COMMAND]  # Describe available commands or one specific command
+  mixergy login           # Login to Mixergy API and store token
+  mixergy tanks           # List all your tanks
+  mixergy version         # Prints the Mixergy gem version
+```
+
+
+## Config file format
+
+To avoid logging-in before each API request, there is support for saving the authentication token to a configuration file, stored as YAML in ~/.mixergy.
+
+This file can be generate using the `mixergy login` CLI command.
+The default tank ID is also stored, to avoid having to lookup a list of tanks each time too.
+
+Example ~/.mixergy file:
+
+```yaml
+---
+token: user/ooShoh7naaR1lai0Ahtie5miechaig7ei/12ab/Tie6sha0vah7onohchifeich2aipheifaiqu9beiphoim4queitheinoMoo2a
+default_tank_id: fcee127d-dad9-4ab4-a734-64586d0c0d68
+```
+
 
 ## Development
 

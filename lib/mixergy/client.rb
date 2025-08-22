@@ -2,6 +2,8 @@
 
 require "faraday"
 require "json"
+require_relative "config"
+require_relative "error"
 require_relative "tank"
 
 module Mixergy
@@ -10,45 +12,50 @@ module Mixergy
 
     def initialize
       @connection = Faraday.new(
-        url: API_ROOT,
-        headers: {
-          "Accept" => "application/json",
-          "Content-Type" => "application/json"
-        }
-      )
-      @token = nil
+        url: API_ROOT
+      ) do |faraday|
+        faraday.request :json      # Automatically encode request bodies as JSON
+        faraday.response :json     # Automatically parse response bodies as JSON
+      end
+    end
+
+    def load_config
+      @config ||= begin
+        config = Mixergy::Config.new
+        config.load
+        # FIXME: find a better place to put this
+        @connection.headers["Authorization"] = "Bearer #{config[:token]}"
+        config
+      end
     end
 
     def login(username, password)
       resp = @connection.post(
         "account/login",
-        {username: username, password: password}.to_json
+        {username: username, password: password}
       )
-      data = JSON.parse(resp.body)
+      data = resp.body
 
-      @token = data["token"]
-      @connection.headers["Authorization"] = "Bearer #{@token}"
+      if data["token"]
+        @connection.headers["Authorization"] = "Bearer #{data["token"]}"
+        data["token"]
+      else
+        raise Mixergy::Error, "Login failed (status: #{resp.status}, body: #{resp.body.inspect})"
+      end
     end
 
     def tanks
-      data = fetch_json("tanks")
-      tank_list = data.dig("_embedded", "tankList") || []
+      resp = @connection.get("tanks")
+      tank_list = resp.body.dig("_embedded", "tankList") || []
       tank_list.map do |tank_data|
         Tank.new(tank_data)
       end
     end
 
-    private
-
-    def fetch_json(path)
-      resp = @connection.get(path)
-      unless resp.success?
-        raise "HTTP Error: #{resp.status} - #{resp.body}"
-      end
-      begin
-        JSON.parse(resp.body)
-      rescue JSON::ParserError => e
-        raise "Invalid JSON response: #{e.message}"
+    def default_tank_id
+      @default_tank_id ||= begin
+        load_config
+        @config[:default_tank_id] || tanks.first&.id
       end
     end
   end

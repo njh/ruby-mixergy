@@ -4,9 +4,9 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
-require 'thor'
-require 'mixergy'
-require 'io/console'
+require "thor"
+require "mixergy"
+require "io/console"
 
 module Mixergy
   class CLI < Thor
@@ -20,14 +20,35 @@ module Mixergy
       puts Mixergy::VERSION
     end
 
-    desc "tanks", "List all tanks for the authenticated user"
-    option :username, aliases: '-u', desc: 'Username'
-    option :password, aliases: '-p', desc: 'Password'
-    def tanks
+    desc "login", "Login to Mixergy API and store token"
+    option :username, aliases: "-u", desc: "Username"
+    option :password, aliases: "-p", desc: "Password"
+    def login
       username = options[:username] || prompt_for_username
       password = options[:password] || prompt_for_password
       client = Mixergy::Client.new
-      client.login(username, password)
+      token = client.login(username, password)
+      if token
+        puts "Login successful!"
+        config = Mixergy::Config.new
+        puts "Writing token to #{config.filepath}"
+        config.load
+        config[:token] = token
+        if !config[:default_tank_id]
+          tank_id = client.tanks.first&.id
+          if tank_id
+            puts "Setting default tank ID to #{tank_id}"
+            config[:default_tank_id] = tank_id
+          end
+        end
+        config.save
+      end
+    end
+
+    desc "tanks", "List all your tanks"
+    def tanks
+      client = Mixergy::Client.new
+      client.load_config
       tanks = client.tanks
       if tanks.empty?
         puts "No tanks found."
