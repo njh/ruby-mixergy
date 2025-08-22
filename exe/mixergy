@@ -34,6 +34,8 @@ module Mixergy
       else
         tanks.each do |tank|
           puts "Serial: #{tank.serial_number}"
+          puts "Id: #{tank.id}"
+          puts
         end
       end
     end
@@ -42,7 +44,7 @@ module Mixergy
 
     def prompt_for_username
       print "Username: "
-      username = STDIN.gets.chomp
+      STDIN.gets.chomp
     end
 
     def prompt_for_password
