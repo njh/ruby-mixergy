@@ -65,12 +65,12 @@ module Mixergy
 
     def prompt_for_username
       print "Username: "
-      STDIN.gets.chomp
+      $stdin.gets.chomp
     end
 
     def prompt_for_password
       print "Password: "
-      password = STDIN.noecho(&:gets)
+      password = $stdin.noecho(&:gets)
       puts
       password.chomp
     end
