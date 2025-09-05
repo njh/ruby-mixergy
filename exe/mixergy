@@ -6,6 +6,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "thor"
 require "mixergy"
+require "mixergy/ascii_art"
 require "io/console"
 
 module Mixergy
@@ -71,6 +72,9 @@ module Mixergy
       puts "Charge: #{status.charge} %"
       puts "Top Temperature: #{status.top_temperature} °C"
       puts "Bottom Temperature: #{status.bottom_temperature} °C"
+      puts
+      puts Mixergy::AsciiArt.draw_tank(status.charge)
+      puts
     end
     private
 
