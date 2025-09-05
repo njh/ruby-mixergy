@@ -5,6 +5,7 @@ require "json"
 require_relative "config"
 require_relative "error"
 require_relative "tank"
+require_relative "status"
 
 module Mixergy
   class Client
@@ -57,6 +58,13 @@ module Mixergy
         load_config
         @config[:default_tank_id] || tanks.first&.id
       end
+    end
+
+    def status(tank = nil)
+      tank_id = tank.id if tank.is_a?(Tank)
+      tank_id = default_tank_id if tank_id.nil?
+      resp = @connection.get("tanks/#{tank_id}/measurements/latest")
+      Status.new(resp.body)
     end
   end
 end

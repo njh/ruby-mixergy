@@ -61,6 +61,17 @@ module Mixergy
       end
     end
 
+
+    desc "status", "Display the current status of a tank"
+    def status
+      client = Mixergy::Client.new
+      client.load_config
+      # FIXME: add support for chosing a specific tank
+      status = client.status
+      puts "Charge: #{status.charge} %"
+      puts "Top Temperature: #{status.top_temperature} °C"
+      puts "Bottom Temperature: #{status.bottom_temperature} °C"
+    end
     private
 
     def prompt_for_username
