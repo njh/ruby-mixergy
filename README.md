@@ -1,7 +1,7 @@
 
 # Mixergy Ruby Client
 
-This gem provides a Ruby interface to the Mixergy Hot Water Tank REST API, making it easy to interact with tanks in a Rubyish way. There is also a CLI tool include to help with fetching an authentication token and interacting with the API.
+This gem provides a Ruby interface to the Mixergy Hot Water Tank REST API, making it easy to interact with tanks in a Rubyish way. There is also a CLI tool included to help with fetching an authentication token and interacting with the API.
 
 
 ## Installation
@@ -35,12 +35,18 @@ Commands:
   mixergy version         # Prints the Mixergy gem version
 ```
 
+The `mixergy status` command displays some stats and a visualisation of the tank:
+
+<img src="docs/screenshot.png" height="400" alt="A screenshot of a Mac OS terminal running `mixergy status`" />
+
+To disable colour, set the `NO_COLOR` environment variable.
+
 
 ## Config file format
 
 To avoid logging-in before each API request, there is support for saving the authentication token to a configuration file, stored as YAML in `~/.mixergy`.
 
-This file can be generate using the `mixergy login` CLI command.
+This file can be generated using the `mixergy login` CLI command.
 The default tank ID is also stored, to avoid having to lookup a list of tanks each time too.
 
 Example `~/.mixergy` file:
