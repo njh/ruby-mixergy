@@ -28,10 +28,12 @@ Included in the gem is a command line tool, to perform actions with the Mixergy 
 ```sh
 $ mixergy help 
 Commands:
+  mixergy boost           # Charge tank to 100%
+  mixergy charge PERCENT  # Charge tank to target percentage
   mixergy help [COMMAND]  # Describe available commands or one specific command
   mixergy login           # Login to Mixergy API and store token
-  mixergy tanks           # List all your tanks
   mixergy status          # Display the current status of a tank
+  mixergy tanks           # List all your tanks
   mixergy version         # Prints the Mixergy gem version
 ```
 

@@ -76,6 +76,29 @@ module Mixergy
       puts Mixergy::AsciiArt.draw_tank(status.charge)
       puts
     end
+
+    desc "charge PERCENT", "Charge tank to target percentage"
+    def charge(percent)
+      percent = percent.to_i
+      unless percent.is_a?(Integer) && percent >= 0 && percent <= 100
+        raise ArgumentError, "percent must be an integer between 0 and 100."
+      end
+  
+      client = Mixergy::Client.new
+      client.load_config
+      current_charge = client.status.charge
+      if client.set_charge(percent)
+        puts "Tank charging from #{current_charge} to #{percent}..."
+      else
+        puts "Failed to charge tank."
+      end
+    end
+  
+    desc "boost", "Charge tank to 100%"
+    def boost
+      charge(100)
+    end
+
     private
 
     def prompt_for_username

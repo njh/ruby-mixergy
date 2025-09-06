@@ -66,5 +66,12 @@ module Mixergy
       resp = @connection.get("tanks/#{tank_id}/measurements/latest")
       Status.new(resp.body)
     end
+
+    def set_charge(percent, tank=nil)
+      tank_id = tank.id if tank.is_a?(Tank)
+      tank_id = default_tank_id if tank_id.nil?
+      resp = @connection.put("tanks/#{tank_id}/control", { charge: percent })
+      resp.success?
+    end
   end
 end
