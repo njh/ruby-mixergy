@@ -11,6 +11,7 @@ module Mixergy
   class Client
     API_ROOT = "https://www.mixergy.io/api/v2"
 
+    # Create a new Mixergy API client.
     def initialize
       @connection = Faraday.new(
         url: API_ROOT
@@ -20,6 +21,8 @@ module Mixergy
       end
     end
 
+    # Loads configuration from ~/.mixergy and sets the API token if present.
+    # @return [Mixergy::Config] the loaded config object
     def load_config
       @config ||= begin
         config = Mixergy::Config.new
@@ -30,6 +33,11 @@ module Mixergy
       end
     end
 
+    # Authenticates with the Mixergy API and stores the token in the connection.
+    # @param username [String] the username
+    # @param password [String] the password
+    # @return [String] the authentication token
+    # @raise [Mixergy::Error] if login fails
     def login(username, password)
       resp = @connection.post(
         "account/login",
@@ -45,6 +53,8 @@ module Mixergy
       end
     end
 
+    # Fetches all tanks associated with the account.
+    # @return [Array<Tank>] list of Tank objects
     def tanks
       resp = @connection.get("tanks")
       tank_list = resp.body.dig("_embedded", "tankList") || []
@@ -53,6 +63,8 @@ module Mixergy
       end
     end
 
+    # Returns the default tank ID from config, or the first tank's ID.
+    # @return [String, nil] the default tank ID
     def default_tank_id
       @default_tank_id ||= begin
         load_config
@@ -60,6 +72,9 @@ module Mixergy
       end
     end
 
+    # Fetches the latest status/measurement for a tank.
+    # @param tank [Tank, nil] the tank object (optional)
+    # @return [Status] the status object for the tank
     def status(tank = nil)
       tank_id = tank.id if tank.is_a?(Tank)
       tank_id = default_tank_id if tank_id.nil?
@@ -67,6 +82,10 @@ module Mixergy
       Status.new(resp.body)
     end
 
+    # Sets the target charge for a tank via the control endpoint.
+    # @param percent [Integer] the target charge percentage
+    # @param tank [Tank, String, nil] the Tank object or Tank Identifier (optional)
+    # @return [Boolean] true if successful, false otherwise
     def set_charge(percent, tank=nil)
       tank_id = tank.id if tank.is_a?(Tank)
       tank_id = default_tank_id if tank_id.nil?
