@@ -84,7 +84,7 @@ module Mixergy
 
     # Sets the target charge for a tank via the control endpoint.
     # @param percent [Integer] the target charge percentage
-    # @param tank [Tank, String, nil] the Tank object or Tank Identifier (optional)
+    # @param tank [Tank, String, nil] the Tank object or Tank GUID (optional)
     # @return [Boolean] true if successful, false otherwise
     def set_charge(percent, tank = nil)
       tank_id = tank.id if tank.is_a?(Tank)
