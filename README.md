@@ -39,7 +39,7 @@ Commands:
 
 The `mixergy status` command displays some stats and a visualisation of the tank:
 
-<img src="docs/screenshot.png" height="400" alt="A screenshot of a Mac OS terminal running `mixergy status`" />
+<img src="doc/screenshot.png" height="400" alt="A screenshot of a Mac OS terminal running `mixergy status`" />
 
 To disable colour, set the `NO_COLOR` environment variable.
 
