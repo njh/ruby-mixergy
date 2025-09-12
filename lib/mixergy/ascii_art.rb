@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'pastel'
+require "pastel"
 
 module Mixergy
   module AsciiArt
@@ -9,20 +9,20 @@ module Mixergy
     # @param width [Integer] The width of the tank (default: 7).
     # @param height [Integer] The height of the tank (default: 10).
     # @return [String] The ASCII art representation of the tank.
-   def self.draw_tank(charge, width: 7, height: 10)
+    def self.draw_tank(charge, width: 7, height: 10)
       fill_height = (height * charge / 100.0).round
       pastel = Pastel.new
 
       tank = []
-      tank << " ╭#{'─' * width}╮"
+      tank << " ╭#{"─" * width}╮"
       height.times do |i|
-        if i < height - fill_height
-          tank << " │#{pastel.blue.on_blue(' ') * width}│"
+        tank << if i < height - fill_height
+          " │#{pastel.blue.on_blue(" ") * width}│"
         else
-          tank << " │#{pastel.red.on_red('█') * width}│"
+          " │#{pastel.red.on_red("█") * width}│"
         end
       end
-      tank << " ╰#{'─' * width}╯"
+      tank << " ╰#{"─" * width}╯"
       tank.join("\n")
     end
   end

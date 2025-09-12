@@ -86,10 +86,10 @@ module Mixergy
     # @param percent [Integer] the target charge percentage
     # @param tank [Tank, String, nil] the Tank object or Tank Identifier (optional)
     # @return [Boolean] true if successful, false otherwise
-    def set_charge(percent, tank=nil)
+    def set_charge(percent, tank = nil)
       tank_id = tank.id if tank.is_a?(Tank)
       tank_id = default_tank_id if tank_id.nil?
-      resp = @connection.put("tanks/#{tank_id}/control", { charge: percent })
+      resp = @connection.put("tanks/#{tank_id}/control", {charge: percent})
       resp.success?
     end
   end

@@ -9,7 +9,7 @@ module Mixergy
     attr_reader :voltage
     attr_reader :current
 
-    def initialize(data={})
+    def initialize(data = {})
       @charge = data["charge"]
       @top_temperature = data["topTemperature"]
       @bottom_temperature = data["bottomTemperature"]
