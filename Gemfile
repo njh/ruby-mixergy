@@ -7,6 +7,6 @@ gemspec
 
 gem "irb"
 gem "rake", "~> 13.0"
-gem 'yard'
+gem "yard"
 
 gem "standard", "~> 1.3"
