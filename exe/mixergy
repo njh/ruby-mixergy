@@ -114,6 +114,4 @@ module Mixergy
   end
 end
 
-if __FILE__ == $PROGRAM_NAME
-  Mixergy::CLI.start(ARGV)
-end
+Mixergy::CLI.start
