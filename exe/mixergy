@@ -68,7 +68,9 @@ module Mixergy
       client.load_config
       # FIXME: add support for chosing a specific tank
       status = client.status
+      target = client.target_temperature
       puts "Charge: #{status.charge} %"
+      puts "Target Temperature: #{target} °C"
       puts "Top Temperature: #{status.top_temperature} °C"
       puts "Bottom Temperature: #{status.bottom_temperature} °C"
       puts
@@ -96,6 +98,23 @@ module Mixergy
     desc "boost", "Charge tank to 100%"
     def boost
       charge(100)
+    end
+
+    desc "temperature TEMP", "Set the target temperature (°C) for the tank"
+    def temperature(temp)
+      temp = temp.to_i
+      unless temp > 0 && temp < 100
+        puts "Temperature must be between 1 and 99°C."
+        exit 1
+      end
+      client = Mixergy::Client.new
+      client.load_config
+      if client.set_temperature(temp)
+        puts "Set target temperature to #{temp}°C."
+      else
+        puts "Failed to set target temperature."
+        exit 1
+      end
     end
 
     private
