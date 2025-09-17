@@ -18,6 +18,7 @@ module Mixergy
       ) do |faraday|
         faraday.request :json      # Automatically encode request bodies as JSON
         faraday.response :json     # Automatically parse response bodies as JSON
+        faraday.response :raise_error  # Raise exceptions on HTTP errors
       end
     end
 
