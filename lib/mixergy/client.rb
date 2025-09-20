@@ -103,7 +103,7 @@ module Mixergy
       resp = @connection.get("tanks/#{tank_id}/settings")
       body = resp.body
       # If the response is a String (due to wrong content type), parse it as JSON
-      body = JSON.parse(body) if body.is_a?(String) and body.start_with?("{")
+      body = JSON.parse(body) if body.is_a?(String) && body.start_with?("{")
       body["max_temp"].to_i
     end
 
@@ -114,7 +114,7 @@ module Mixergy
     def set_target_temperature(temp, tank = nil)
       tank_id = tank.id if tank.is_a?(Tank)
       tank_id = default_tank_id if tank_id.nil?
-      resp = @connection.put("tanks/#{tank_id}/settings", { max_temp: temp })
+      resp = @connection.put("tanks/#{tank_id}/settings", {max_temp: temp})
       resp.success?
     end
   end
