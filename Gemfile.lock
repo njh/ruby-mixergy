@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mixergy (0.1.0)
+    mixergy (0.2.0)
       faraday
       pastel
       thor
@@ -10,8 +10,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.3)
+    cgi (0.5.0)
     date (3.4.1)
-    erb (5.0.2)
+    erb (4.0.4)
+      cgi (>= 0.3.3)
     faraday (2.13.4)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -38,7 +40,7 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.4.0)
+    prism (1.5.1)
     psych (5.2.6)
       date
       stringio
@@ -48,7 +50,7 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
-    regexp_parser (2.11.2)
+    regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
     rubocop (1.80.2)
@@ -70,7 +72,7 @@ GEM
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
     ruby-progressbar (1.13.0)
-    standard (1.51.0)
+    standard (1.51.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
       rubocop (~> 1.80.2)
@@ -92,7 +94,7 @@ GEM
     yard (0.9.37)
 
 PLATFORMS
-  arm64-darwin-22
+  arm64-darwin-23
   ruby
 
 DEPENDENCIES
@@ -103,4 +105,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   2.7.1
+   2.5.15

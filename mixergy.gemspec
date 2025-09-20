@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "This gem provides a simple interface for interacting with the Mixergy API, allowing users to manage their hot water tanks programmatically."
   spec.homepage = "https://github.com/njh/ruby-mixergy"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 3.1.2"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["homepage_uri"] = spec.homepage
