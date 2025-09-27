@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bundler/gem_tasks"
+require "minitest/test_task"
 require "standard/rake"
 require "yard"
 
@@ -10,4 +11,6 @@ YARD::Rake::YardocTask.new(:yard) do |t|
   t.options = ["--output-dir", "doc"]
 end
 
-task default: :standard
+Minitest::TestTask.create
+
+task default: [:standard, :test]

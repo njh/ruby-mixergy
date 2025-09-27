@@ -10,3 +10,4 @@ gem "rake", "~> 13.0"
 gem "yard"
 
 gem "standard", "~> 1.3"
+gem "minitest", "~> 5.25.5"

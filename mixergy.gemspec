@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   # Command-line interface
   spec.add_runtime_dependency "thor"
   spec.add_runtime_dependency "pastel"
+  spec.add_runtime_dependency "json"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
